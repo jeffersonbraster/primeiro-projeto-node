@@ -1,11 +1,16 @@
 // import AppError from '@shared/errors/AppError';
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakeUsersRepository';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import ListProvidersRepository from './ListProvidersService';
 
 describe('LIstProviders', () => {
   it('should be able to list providers', async () => {
     const fakeUsersRepository = new FakeUsersRepository();
-    const listProviders = new ListProvidersRepository(fakeUsersRepository);
+    const fakeCacheProvider = new FakeCacheProvider();
+    const listProviders = new ListProvidersRepository(
+      fakeUsersRepository,
+      fakeCacheProvider,
+    );
 
     const test1 = await fakeUsersRepository.create({
       name: 'Jejezinho',

@@ -1,13 +1,16 @@
 import AppError from '@shared/errors/AppError';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import CreateAppointmentService from './CreateAppointmentService';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointementsRepository';
 
 describe('CreateAppointment', () => {
   it('should be able to create a new appointment', async () => {
     const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    const fakeCacheProvider = new FakeCacheProvider();
 
     const createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
+      fakeCacheProvider,
     );
 
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
@@ -49,8 +52,14 @@ describe('CreateAppointment', () => {
 
   it('should not be able to create an appointments on a past date', async () => {
     const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    const fakeCacheProvider = new FakeCacheProvider();
+    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
     const createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
+    );
+    const createAppointment = new CreateAppointmentService(
+      fakeAppointmentsRepository,
+      fakeCacheProvider,
     );
 
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
@@ -68,8 +77,11 @@ describe('CreateAppointment', () => {
 
   it('should not be able to create an appointment with same user as provider', async () => {
     const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    const fakeCacheProvider = new FakeCacheProvider();
+
     const createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
+      fakeCacheProvider,
     );
 
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
@@ -87,8 +99,11 @@ describe('CreateAppointment', () => {
 
   it('should not be able to create an appointment outside available hours', async () => {
     const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    const fakeCacheProvider = new FakeCacheProvider();
+
     const createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
+      fakeCacheProvider,
     );
 
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
