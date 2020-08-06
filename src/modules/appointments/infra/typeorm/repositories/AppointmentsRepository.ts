@@ -40,7 +40,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return appointment;
   }
 
-  public async findAllInMonthFromProvider({
+  public async findAllInDayFromProvider({
     provider_id,
     month,
     year,
@@ -57,12 +57,13 @@ class AppointmentsRepository implements IAppointmentsRepository {
             `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`,
         ),
       },
+      relations: ['user'],
     });
 
     return appointments;
   }
 
-  public async findAllInDayFromProvider({
+  public async findAllInMonthFromProvider({
     provider_id,
     month,
     year,
@@ -77,7 +78,6 @@ class AppointmentsRepository implements IAppointmentsRepository {
             `to_char(${dateFieldName}, 'MM-YYYY') = '${parsedMonth}-${year}'`,
         ),
       },
-      relations: ['user'],
     });
 
     return appointments;
